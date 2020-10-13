@@ -1,0 +1,12 @@
+Counting Sort Subroutine
+
+Counting sort uses three lists: the input list, A[0,1, \dots, n]A[0,1,…,n], the output list, B[0,1, \dots, n]B[0,1,…,n], and a list that serves as temporary memory, C[0,1, \dots, k]C[0,1,…,k]. Note that AA and BB have nn slots (a slot for each element), while CC contains kk slots (a slot for each key value).
+
+Counting sort starts by going through AA, and for each element A[i]A[i], it goes to the index of CC that has the same value as A[i]A[i] (so it goes to C[A[i]]C[A[i]]) and increments the value of C[A[i]]C[A[i]] by one. This means that if AA has seven 00’s in its list, after counting sort has gone through all nn elements of AA, the value at C[0]C[0] will be 77. Similarly, if AA has two 44’s, after counting sort has gone through all of the elements of AA, C[4]C[4] (using 0 indexing) will be equal to 22.
+
+In this step, CC keeps track of how many elements in AA there are that have the same value of a particular index in CC. In other words, the indices of CC correspond to the values of elements in AA, and the values in CC correspond to the total number of times that a value in AA appears in AA.
+Radix sort is an integer sorting algorithm that sorts data with integer keys by grouping the keys by individual digits that share the same significant position and value (place value). Radix sort uses counting sort as a subroutine to sort an array of numbers. Because integers can be used to represent strings (by hashing the strings to integers), radix sort works on data types other than just integers. Because radix sort is not comparison based, it is not bounded by \Omega(n \log n)Ω(nlogn) for running time — in fact, radix sort can perform in linear time.
+
+Radix sort incorporates the counting sort algorithm so that it can sort larger, multi-digit numbers without having to potentially decrease the efficiency by increasing the range of keys the algorithm must sort over (since this might cause a lot of wasted time).
+
+Radix Sort
