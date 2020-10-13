@@ -1,0 +1,138 @@
+Example
+To show how radix sort works, you’ll sort the following array:
+
+var array = [88, 410, 1772, 20]
+
+Radix sort relies on the positional notation of integers, as shown here:
+
+
+
+First, the array is divided into buckets based on the value of the least significant digit: the ones digit.
+
+
+
+These buckets are then emptied in order, resulting in the following partially-sorted array:
+
+array = [410, 20, 1772, 88]
+
+Next, repeat this procedure for the tens digit:
+
+
+
+The relative order of the elements didn’t change this time, but you’ve still got more digits to inspect.
+
+The next digit to consider is the hundreds digit:
+
+
+
+For values that have no hundreds position (or any other position without a value), the digit will be assumed to be zero.
+
+Reassembling the array based on these buckets gives the following:
+
+array = [20, 88, 410, 1772]
+
+Finally, you need to consider the thousands digit:
+
+
+
+Reassembling the array from these buckets leads to the final sorted array:
+
+array = [20, 88, 410, 1772]
+
+When multiple numbers end up in the same bucket, their relative ordering doesn’t change. For example, in the zero bucket for the hundreds position, 20 comes before 88. This is because the previous step put 20 in a lower bucket than 80, so 20 ended up before 88 in the array.
+
+Implementation
+Download the materials and open up the starter project for this chapter. In the Sources directory, create a new file named RadixSort.swift. Add the following to the file:
+
+extension Array where Element == Int {
+
+  public mutating func radixSort() {
+
+  }
+}
+
+Here you’ve added a radixSort method to arrays of integers via an extension. Start implementing the radixSort method using the following:
+
+public mutating func radixSort() {
+  // 1
+  let base = 10
+  // 2
+  var done = false
+  var digits = 1
+  while !done {
+  
+  }
+}
+
+This bit is fairly straightforward:
+
+You’re sorting base 10 integers in this instance. Since you’ll be using this value multiple times in the algorithm, you store it in a constant base.
+You declare two variables to track your progress. Radix sort works in multiple passes, so done serves as a flag that determines whether the sort is complete. The digits variable keeps track of the current digit you’re looking at.
+Next, you’ll write the logic that sorts each element into buckets (also known as Bucket sort).
+
+Bucket Sort
+Write the following inside the while loop:
+
+// 1
+var buckets: [[Int]] = .init(repeating: [], count: base)
+// 2
+forEach {
+  number in
+  let remainingPart = number / digits
+  let digit = remainingPart % base
+  buckets[digit].append(number)
+}
+// 3
+digits *= base
+self = buckets.flatMap { $0 }
+
+Here’s what you’ve written:
+
+You instantiate the buckets using a two-dimensional array. Because you’re using base 10, you need 10 buckets.
+You place each number in the correct bucket.
+You update digits to the next digit you wish to inspect and update the array using the contents of buckets. flatMap will flatten the two-dimensional array to a one-dimensional array, as if you’re emptying the buckets into the array.
+When Do You Stop?
+Your while loop currently runs forever, so you’ll need a terminating condition in there somewhere. You’ll do that as follows:
+
+At the beginning of the while loop, add done = true.
+Inside the closure of forEach, add the following:
+if remainingPart > 0 {
+  done = false
+}
+
+Since forEach iterates over all the integers, as long as one of the integers still has unsorted digits, you’ll need to continue sorting.
+
+With that, you’ve learned about your first non-comparative sorting algorithm! Head back to the playground page and write the following to try out your code:
+
+example(of: "radix sort") {
+  var array = [88, 410, 1772, 20]
+  print("Original array: \(array)")
+  array.radixSort()
+  print("Radix sorted: \(array)")
+}
+
+You should see the following console output:
+
+---Example of: radix sort---
+Original: [88, 410, 1772, 20]
+Radix sorted: [20, 88, 410, 1772]
+
+Where to Go From Here?
+If you want to check the results of your work against ours, you can find the completed project in the downloads for this tutorial.
+
+Radix sort is one of the fastest sorting algorithms. The average time complexity of radix sort is O(k × n), where k is the number of significant digits of the largest number, and n is the number of integers in the array.
+
+Radix sort works best when k is constant, which occurs when all numbers in the array have the same count of significant digits. Its time complexity then becomes O(n). Radix sort also incurs a O(n) space complexity, as you need space to store each bucket.
+
+If you enjoyed what you learned in this tutorial, why not check out the complete Data Structures and Algorithms in Swift book, available on our store in early access?
+
+In Data Structures and Algorithms in Swift, you’ll learn how to implement the most popular and useful data structures and when and why you should use one particular datastructure or algorithm over another. This set of basic data structures and algorithms will serve as an excellent foundation for building more complex and special-purpose constructs.
+
+As well, the high-level expressiveness of Swift makes it an ideal choice for learning these core concepts without sacrificing performance.
+
+You’ll start with the fundamental structures of linked lists, queues and stacks, and see how to implement them in a highly Swift-like way.
+Move on to working with various types of trees, including general purpose trees, binary trees, AVL trees, binary search trees and tries.
+Go beyond bubble and insertion sort with better-performing algorithms, including mergesort, radix sort, heap sort and quicksort.
+Learn how to construct directed, non-directed and weighted graphs to represent many real-world models, and traverse graphs and trees efficiently with breadth-first, depth-first, Dijkstra’s and Prim’s algorithms to solve problems such as finding the shortest path or lowest cost in a network.
+And much, much more!
+By the end of this book, you’ll have hands-on experience solving common issues with data structures and algorithms — and you’ll be well on your way to developing your own efficient and useful implementations.
